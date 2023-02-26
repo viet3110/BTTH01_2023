@@ -62,7 +62,7 @@
                 exit;
             }
             $txtPassword = md5($txtPassword);
-            $sql = "INSERT INTO signup (Username, Pass) VALUES (N'$name', N'$txtPassword')";
+            $sql = "INSERT INTO users (username, password) VALUES (N'$name', N'$txtPassword')";
             $query = mysqli_query($conn, $sql);
             //Thông báo quá trình lưu
             if ($query)
