@@ -77,12 +77,13 @@
                 exit;
             }
             $txtPassword = md5($txtPassword);
+            $sql = "SELECT * from signup where Username = '$name' and Pass = '$txtPassword'";
             $row = mysqli_fetch_array($queryy);
             if ($txtPassword != $row['Pass']) {
                 echo "Mật khẩu không đúng. Vui lòng nhập lại. <a href='javascript: history.go(-1)'>Trở lại</a>";
                 exit;
             }
-            $result = mysqli_query($conn, "SELECT * from signup where Username = '$name' and Pass = '$txtPassword'");
+            $result = mysqli_query($conn, $sql);
             $rows = mysqli_fetch_assoc($result);
             if($rows) {
                 echo "<script>alert('Đăng Nhập Thành Công!');</script>";
