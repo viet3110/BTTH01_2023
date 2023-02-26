@@ -68,46 +68,27 @@
     <?php 
         include("ketnoi.php");
         if(isset($_POST["add"])) {
-
-            $name = $_POST['name'];
-            $txtPassword = $_POST['txtPassword'];
+            $name = mysqli_real_escape_string($conn, $_POST['name']);
+            $txtPassword = mysqli_real_escape_string($conn, $_POST['txtPassword']);
+            $msql = "SELECT Username, Pass FROM signup WHERE Username='$name'";
+            $queryy = mysqli_query($conn, $msql);
+            if (!$name || !$txtPassword) {
+                echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu. <a href='javascript: history.go(-1)'>Trở lại</a>";
+                exit;
+            }
+            $txtPassword = md5($txtPassword);
+            $row = mysqli_fetch_array($queryy);
+            if ($txtPassword != $row['Pass']) {
+                echo "Mật khẩu không đúng. Vui lòng nhập lại. <a href='javascript: history.go(-1)'>Trở lại</a>";
+                exit;
+            }
             $result = mysqli_query($conn, "SELECT * from signup where Username = '$name' and Pass = '$txtPassword'");
             $rows = mysqli_fetch_assoc($result);
             if($rows) {
-                    header("location: add_category.php");
-                } else {
-                    echo '<p style="color = red">Đăng Nhập Thất Bại!</p>';
-                }
-
-            // $name = mysqli_real_escape_string($conn, $_POST['name']);
-            // $txtPassword = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-            // $msql = "SELECT Username, Pass FROM signup WHERE Username='$name'";
-            // $queryy = mysqli_query($conn, $msql);
-            // if (!$name || !$txtPassword) {
-            //     echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu. <a href='javascript: history.go(-1)'>Trở lại</a>";
-            //     exit;
-            // }
-            // $txtPassword = md5($txtPassword);
-            // $row = mysqli_fetch_array($queryy);
-            // if ($txtPassword != $row['Pass']) {
-            //     echo "Mật khẩu không đúng. Vui lòng nhập lại. <a href='javascript: history.go(-1)'>Trở lại</a>";
-            //     exit;
-            // }
-            // $result = mysqli_query($conn, "SELECT * from signup where Username = '$name' and Pass = '$txtPassword'");
-            // $rows = mysqli_fetch_assoc($result);
-            // if($rows) {
-            //     header("location: admin/index.php");
-            // } else {
-            //     echo "<script>alert('Đăng Ký Thất Bại!');</script>";
-            // }
-
-            // $num_row = mysqli_num_rows($query);
-            // if($num_row!=0){
-            //     header("location: admin/index.php");
-            // }
-            // else {
-            //     echo "Tài khoản hoặc mật khẩu không đúng! Vui lòng đăng nhập lại!";
-            // }
+                echo "<script>alert('Đăng Nhập Thành Công!');</script>";
+            } else {
+                echo "<script>alert('Đăng Ký Thất Bại!');</script>";
+            }
         }
     ?>
 
