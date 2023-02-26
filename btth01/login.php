@@ -70,16 +70,16 @@
         if(isset($_POST["add"])) {
             $name = mysqli_real_escape_string($conn, $_POST['name']);
             $txtPassword = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-            $msql = "SELECT Username, Pass FROM signup WHERE Username='$name'";
+            $msql = "SELECT username, password FROM users WHERE username='$name'";
             $queryy = mysqli_query($conn, $msql);
             if (!$name || !$txtPassword) {
                 echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu. <a href='javascript: history.go(-1)'>Trở lại</a>";
                 exit;
             }
             $txtPassword = md5($txtPassword);
-            $sql = "SELECT * from signup where Username = '$name' and Pass = '$txtPassword'";
+            $sql = "SELECT * from users where username = '$name' and password = '$txtPassword'";
             $row = mysqli_fetch_array($queryy);
-            if ($txtPassword != $row['Pass']) {
+            if ($txtPassword != $row['password']) {
                 echo "Mật khẩu không đúng. Vui lòng nhập lại. <a href='javascript: history.go(-1)'>Trở lại</a>";
                 exit;
             }
