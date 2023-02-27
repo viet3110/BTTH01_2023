@@ -66,15 +66,27 @@
                             //Kiểm tra người dùng đã nhập liệu đầy đủ chưa
                             if (!$user_name || !$pass)
                             {
-                                echo "Vui lòng nhập đầy đủ thông tin. <a href='javascript: history.go(-1)'>Trở lại</a>";
+                                echo "Vui lòng nhập đầy đủ thông tin.";
                                 exit;
                             }
-                            $pass = md5($pass);
-                            $sql = "INSERT INTO users (username, password) VALUES (N'$user_name', N'$pass')";
-                            $query = mysqli_query($conn, $sql);
-                            //Thông báo quá trình lưu
-                            if ($query)
-                                echo "Đăng ký thành công!<a href='javascript: history.go(-1)'>Trở lại</a>";
+                             // Kiểm tra username có bị trùng hay không
+                            $msql = "SELECT * FROM users WHERE username = '$user_name'";
+                            $result = mysqli_query($conn, $msql);
+                            if (mysqli_num_rows($result) > 0)
+                            {
+                                // Sử dụng javascript để thông báo
+                                echo "Thông tin đăng nhập bị sai.";
+                                
+                                // Dừng chương trình
+                                die ();
+                            } else {
+                                $pass = md5($pass);
+                                $sql = "INSERT INTO users (username, password) VALUES (N'$user_name', N'$pass')";
+                                $query = mysqli_query($conn, $sql);
+                                //Thông báo quá trình lưu
+                                if ($query)
+                                    echo "Đăng ký thành công!";
+                            }
                         }
                     ?>
                 </div>
