@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
             <div class="container-fluid">
                 <div class="my-logo">
@@ -29,6 +29,9 @@
                     <li class="nav-item">
                     <a class="nav-link active" href="./login.php">Đăng nhập</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="./signup.php">Đăng ký</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Nội dung cần tìm" aria-label="Search">
@@ -37,22 +40,85 @@
                 </div>
             </div>
         </nav>
+</header>
+    <main class="container mt-5 mb-5">
+        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
+        <div class="d-flex justify-content-center h-100">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Log In</h3>
+                        <div class="d-flex justify-content-end social_icon">
+                            <span><i class="fab fa-facebook-square"></i></span>
+                            <span><i class="fab fa-google-plus-square"></i></span>
+                            <span><i class="fab fa-twitter-square"></i></span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action = "" method="post">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" name = "user_name">
+                            </div>
 
-    </header>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-control" name = "pass">
+                            </div>
+                            
+                            <div class="row align-items-center remember">
+                                <input type="checkbox">Remember Me
+                            </div>
+                            <div class="form-group">
+                            <button type="submit" class="btn btn-primary" name="add">Log In</button>
+                            </div>
+                            <div class="form-group">
+                        </form>
 
-    <main>
-        <div class = "container">
-            <h1>Đăng Nhập</h1>
-            <form method = "POST" action = "">
-                <div class="form-group">
-                    <label for="txtUsername">Username</label>
-                    <input name = "name" class="form-control">
+                        <?php
+                            //Xử lý đăng nhập
+                            if (isset($_POST['add'])) 
+                            {
+                                //Kết nối tới database
+                                include('ketnoi.php');
+                                
+                                //Lấy dữ liệu nhập vào
+                                $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
+                                $pass = mysqli_real_escape_string($conn, $_POST['pass']);
+
+                                //Kiểm tra người dùng đã nhập liệu đầy đủ chưa
+                                if (!$user_name || !$pass)
+                                {
+                                    echo "Vui lòng nhập đầy đủ thông tin.";
+                                    exit;
+                                }
+
+                                // mã hóa mật khẩu
+                                $pass = md5($pass);
+
+                                // kiểm tra tên đăng nhập có tồn tại hay không
+                                $query = mysqli_query($conn, "SELECT username, password FROM users WHERE username='$user_name'");
+                                if (mysqli_num_rows($query) == 0) {
+                                    echo "Tên đăng nhập này không tồn tại. Vui lòng kiểm tra lại.";
+                                    exit;
+                                }
+
+                                //Lấy mật khẩu trong database ra
+                                $row = mysqli_fetch_array($query);
+                                
+                                //So sánh 2 mật khẩu có trùng khớp hay không
+                                if ($pass != $row['password']) {
+                                    echo "Mật khẩu không đúng. Vui lòng nhập lại.";
+                                    exit;
+                                }
+                                
+                                //Lưu tên đăng nhập
+                                $_SESSION['username'] = $user_name;
+                                echo "Xin chào " . $user_name . ". Bạn đã đăng nhập thành công. <a href='admin'>Về trang chủ</a>";
+                                die();
+                            }
+                        ?>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="txtPassword">Password</label>
-                    <input type = "password" name = "txtPassword" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary" name = "add">Đăng Nhập</button>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center ">
                         Don't have an account?<a href="signup.php" class="text-warning text-decoration-none">Sign Up</a>
@@ -61,38 +127,8 @@
                         <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
                     </div>
                 </div>
-            </form>
         </div>
     </main>
-
-    <?php 
-        include("ketnoi.php");
-        if(isset($_POST["add"])) {
-            $name = mysqli_real_escape_string($conn, $_POST['name']);
-            $txtPassword = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-            $msql = "SELECT username, password FROM users WHERE username='$name'";
-            $queryy = mysqli_query($conn, $msql);
-            if (!$name || !$txtPassword) {
-                echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu. <a href='javascript: history.go(-1)'>Trở lại</a>";
-                exit;
-            }
-            $txtPassword = md5($txtPassword);
-            $sql = "SELECT * from users where username = '$name' and password = '$txtPassword'";
-            $row = mysqli_fetch_array($queryy);
-            if ($txtPassword != $row['password']) {
-                echo "Mật khẩu không đúng. Vui lòng nhập lại. <a href='javascript: history.go(-1)'>Trở lại</a>";
-                exit;
-            }
-            $result = mysqli_query($conn, $sql);
-            $rows = mysqli_fetch_assoc($result);
-            if($rows) {
-                echo "<script>alert('Đăng Nhập Thành Công!');</script>";
-            } else {
-                echo "<script>alert('Đăng Ký Thất Bại!');</script>";
-            }
-        }
-    ?>
-
     <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
         <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
     </footer>
