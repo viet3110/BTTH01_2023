@@ -2,7 +2,7 @@
     $severname = "localhost";
     $username = "root";
     $pass = "";
-    $database = "btth01_cse45";
+    $database = "btth01_cse485";
     $conn = mysqli_connect($severname, $username, $pass, $database);
 
     // if (!$conn)
