@@ -16,8 +16,13 @@ FROM baiviet
 -- e
 
 -- f
+SELECT tacgia.ten_tgia, COUNT(baiviet.ma_tgia) 
+FROM baiviet, tacgia 
+WHERE tacgia.ma_tgia = baiviet.ma_tgia GROUP BY tacgia.ten_tgia, baiviet.ma_tgia ORDER BY baiviet.ma_tgia asc limit 2;
 
 -- g
+SELECT * FROM baiviet 
+WHERE ten_bhat LIKE '%yêu%' OR ten_bhat LIKE '%thương%' OR ten_bhat LIKE '%anh%' OR ten_bhat LIKE '%em%';
 
 -- h
 
