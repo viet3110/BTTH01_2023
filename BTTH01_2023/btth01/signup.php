@@ -34,45 +34,61 @@
             </div>
         </nav>
     </header>
-    <main>
-        <div class = "container">
-            <h1>Đăng Ký</h1>
-            <form method = "POST" action = "">
-                <div class="form-group">
-                    <label for="txtUsername">Username</label>
-                    <input name = "name" class="form-control">
+    <main class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Đăng Ký</h3>
+                    <div class="d-flex justify-content-end social_icon">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <span><i class="fab fa-google-plus-square"></i></span>
+                        <span><i class="fab fa-twitter-square"></i></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="txtPassword">Password</label>
-                    <input name = "txtPassword" class="form-control">
+                <div class="card-body">
+                    <form method = "POST" action = "">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">User_Name</label>
+                            <input name="user_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter UserName">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="add">Đăng Ký</button>
+                    </form>
+                    <?php
+                        include("ketnoi.php");
+                        if(isset($_POST["add"])) {
+                            $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
+                            $pass = mysqli_real_escape_string($conn, $_POST['pass']);
+                            //Kiểm tra người dùng đã nhập liệu đầy đủ chưa
+                            if (!$user_name || !$pass)
+                            {
+                                echo "Vui lòng nhập đầy đủ thông tin. <a href='javascript: history.go(-1)'>Trở lại</a>";
+                                exit;
+                            }
+                            $pass = md5($pass);
+                            $sql = "INSERT INTO users (username, password) VALUES (N'$user_name', N'$pass')";
+                            $query = mysqli_query($conn, $sql);
+                            //Thông báo quá trình lưu
+                            if ($query)
+                                echo "Đăng ký thành công!<a href='javascript: history.go(-1)'>Trở lại</a>";
+                        }
+                    ?>
                 </div>
-                <button type="submit" class="btn btn-primary" name = "add">Đăng Ký</button>
-            </form>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center ">
+                        Bạn đã có tài khoản?<a href="login.php" class="text-warning text-decoration-none">Login</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
-    <?php
-        include("ketnoi.php");
-        if(isset($_POST["add"])) {
-            $name = mysqli_real_escape_string($conn, $_POST['name']);
-            $txtPassword = mysqli_real_escape_string($conn, $_POST['txtPassword']);
-            //Kiểm tra người dùng đã nhập liệu đầy đủ chưa
-            if (!$name || !$txtPassword)
-            {
-                echo "Vui lòng nhập đầy đủ thông tin. <a href='javascript: history.go(-1)'>Trở lại</a>";
-                exit;
-            }
-            $txtPassword = md5($txtPassword);
-            $sql = "INSERT INTO users (username, password) VALUES (N'$name', N'$txtPassword')";
-            $query = mysqli_query($conn, $sql);
-            //Thông báo quá trình lưu
-            if ($query)
-            echo "<script>alert('Đăng Ký Thành Công!');</script>";
-            else
-            echo "<script>alert('Đăng Ký Thất Bại!');</script>";
-        }
-    ?>
-
-<footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
+    <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
         <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
