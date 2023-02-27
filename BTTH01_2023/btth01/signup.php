@@ -58,7 +58,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary" name="add">Đăng Ký</button>
                     </form>
-                    <?php
+                   <?php
                         include("ketnoi.php");
                         if(isset($_POST["add"])) {
                             $user_name = mysqli_real_escape_string($conn, $_POST['user_name']);
@@ -75,7 +75,7 @@
                             if (mysqli_num_rows($result) > 0)
                             {
                                 // Sử dụng javascript để thông báo
-                                echo "Thông tin đăng nhập bị sai.";
+                                echo "Tài khoản này đã được sử dụng! Vui lòng sử dụng tên khác.";
                                 
                                 // Dừng chương trình
                                 die ();
