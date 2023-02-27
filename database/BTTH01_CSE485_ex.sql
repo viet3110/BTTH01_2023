@@ -5,7 +5,9 @@ SELECT * FROM baiviet JOIN theloai ON baiviet.ma_tloai = theloai.ma_tloai WHERE 
 SELECT * FROM baiviet JOIN tacgia ON baiviet.ma_tgia = tacgia.ma_tgia WHERE tacgia.ten_tgia = 'Nhacvietplus';
 
 -- c
-
+SELECT theloai.ma_tloai, theloai.ten_tloai 
+FROM baiviet,theloai 
+WHERE baiviet.ma_tloai=theloai.ma_tloai and baiviet.noidung='';
 
 -- d
 SELECT *
@@ -14,6 +16,14 @@ FROM baiviet
     inner JOIN theloai ON baiviet.ma_tloai = theloai.ma_tloai
 
 -- e
+SELECT theloai.ma_tloai, theloai.ten_tloai 
+FROM baiviet, theloai 
+WHERE baiviet.ma_tloai = theloai.ma_tloai 
+            GROUP BY theloai.ma_tloai, theloai.ten_tloai 
+            having count(theloai.ma_tloai) >= all(
+                SELECT count(baiviet.ma_tloai) FROM baiviet
+                GROUP BY baiviet.ma_tloai
+            );
 
 -- f
 SELECT tacgia.ten_tgia, COUNT(baiviet.ma_tgia) 
@@ -25,8 +35,11 @@ SELECT * FROM baiviet
 WHERE ten_bhat LIKE '%yêu%' OR ten_bhat LIKE '%thương%' OR ten_bhat LIKE '%anh%' OR ten_bhat LIKE '%em%';
 
 -- h
+SELECT * FROM baiviet 
+WHERE (ten_bhat OR tieude LIKE '%yêu%') OR (ten_bhat or tieude like '%thương%') OR (ten_bhat OR tieude LIKE '%anh%') OR (ten_bhat OR tieude LIKE '%em%');
 
 -- i
+
 
 -- j
 
