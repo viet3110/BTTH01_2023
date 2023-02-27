@@ -38,7 +38,7 @@
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
-                    <h3>Đăng Ký</h3>
+                    <h3>SIGN UP</h3>
                     <div class="d-flex justify-content-end social_icon">
                         <span><i class="fab fa-facebook-square"></i></span>
                         <span><i class="fab fa-google-plus-square"></i></span>
@@ -56,7 +56,7 @@
                             <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
                             <input type="password" class="form-control" name = "pass">
                         </div>
-                        <button type="submit" class="btn btn-primary" name="add">Đăng Ký</button>
+                        <button type="submit" class="btn btn-primary" name="add">SIGN UP</button>
                     </form>
                    <?php
                         include("ketnoi.php");
@@ -92,7 +92,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center ">
-                        Bạn đã có tài khoản?<a href="login.php" class="text-warning text-decoration-none">Login</a>
+                        Do you already have an account?<a href="login.php" class="text-warning text-decoration-none">Login</a>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
