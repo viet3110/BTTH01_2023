@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 26, 2023 lúc 01:48 PM
+-- Thời gian đã tạo: Th2 27, 2023 lúc 01:47 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -92,22 +92,23 @@ INSERT INTO `tacgia` (`ma_tgia`, `ten_tgia`, `hinh_tgia`) VALUES
 
 CREATE TABLE `theloai` (
   `ma_tloai` int(10) UNSIGNED NOT NULL,
-  `ten_tloai` varchar(50) NOT NULL
+  `ten_tloai` varchar(50) NOT NULL,
+  `SLBaiViet` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `theloai`
 --
 
-INSERT INTO `theloai` (`ma_tloai`, `ten_tloai`) VALUES
-(1, 'Nhạc trẻ'),
-(2, 'Nhạc trữ tình'),
-(3, 'Nhạc cách mạng'),
-(4, 'Nhạc thiếu nhi'),
-(5, 'Nhạc quê hương'),
-(6, 'POP'),
-(7, 'Rock'),
-(8, 'R&B');
+INSERT INTO `theloai` (`ma_tloai`, `ten_tloai`, `SLBaiViet`) VALUES
+(1, 'Nhạc trẻ', NULL),
+(2, 'Nhạc trữ tình', NULL),
+(3, 'Nhạc cách mạng', NULL),
+(4, 'Nhạc thiếu nhi', NULL),
+(5, 'Nhạc quê hương', NULL),
+(6, 'POP', NULL),
+(7, 'Rock', NULL),
+(8, 'R&B', NULL);
 
 -- --------------------------------------------------------
 
