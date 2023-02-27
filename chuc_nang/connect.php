@@ -13,9 +13,9 @@ if(!$conn){
     echo 'ket noi thanh cong ';
 }
 
-if(isset($_GET['delete'])){
-    $ma_tgia = $_GET['delete'];
-    $conn -> query("DELETE FROM tacgia WHERE ma_tgia=$ma_tgia");
-    header("Location:lietketacgia.php");
-}
+// if(isset($_GET['delete'])){
+//     $ma_tgia = $_GET['delete'];
+//     $conn -> query("DELETE FROM tacgia WHERE ma_tgia=$ma_tgia");
+//     header("Location:lietketacgia.php");
+// }
 ?>
