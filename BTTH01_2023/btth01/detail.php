@@ -38,25 +38,56 @@
         </nav>
 
     </header>
-    <main class="container mt-5">
-        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
-       
-                <div class="row mb-5">
-                    <div class="col-sm-4">
-                        <img src="images/songs/cayvagio.jpg" class="img-fluid" alt="...">
-                    </div>
-                    <div class="col-sm-8">
-                        <h5 class="card-title mb-2">
-                            <a href="" class="text-decoration-none">Cây và gió</a>
-                        </h5>
-                        <p class="card-text"><span class=" fw-bold">Bài hát: </span>Cây và gió</p>
-                        <p class="card-text"><span class=" fw-bold">Thể loại: </span>Nhạc trữ tình</p>
-                        <p class="card-text"><span class=" fw-bold">Tóm tắt: </span>Em và anh, hai đứa quen nhau thật tình cờ. Lời hát của anh từ bài hát “Cây và gió” đã làm tâm hồn em xao động. Nhưng sự thật phũ phàng rằng em chưa bao giờ nói cho anh biết những suy nghĩ tận sâu trong tim mình. Bởi vì em nhút nhát, em không dám đối mặt với thực tế khắc nghiệt, hay thực ra em không dám đối diện với chính mình.</p>
-                        <p class="card-text"><span class=" fw-bold">Nội dung: </span>Em và anh, hai đứa quen nhau thật tình cờ. Lời hát của anh từ bài hát “Cây và gió” đã làm tâm hồn em xao động. Nhưng sự thật phũ phàng rằng em chưa bao giờ nói cho anh biết những suy nghĩ tận sâu trong tim mình. Bởi vì em nhút nhát, em không dám đối mặt với thực tế khắc nghiệt, hay thực ra em không dám đối diện với chính mình.</p>
-                        <p class="card-text"><span class=" fw-bold">Tác giả: </span>Nguyễn Văn Giả</p>
+    <?php
+     $conn = mysqli_connect('localhost','root','','btth01_cse485');
+     if(!$conn){
+         die('Kết nối tới Server lỗi');
+     }
+     $url =  $_SERVER['REQUEST_URI'];
+     $Parse__url=parse_url($url);
+     $id_Parse=$Parse__url["query"];
+     $length=strlen($id_Parse);
+     $id=substr("$id_Parse", 3, $length-1);
 
-                    </div>          
-        </div>
+
+    ?>
+    <!--Thực hiện -->
+    <main class="container mt-5">
+        
+        <?php        
+
+    #Hiển thị Thực hiện truy vấn
+            $sql ="SELECT * from baiviet,tacgia,theloai WHERE baiviet.ma_tloai=theloai.ma_tloai and baiviet.ma_tgia=tacgia.ma_tgia and baiviet.ma_bviet=$id";
+            $result = mysqli_query($conn, $sql);
+
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result))
+                {   
+                    ?>
+                    <div class="row mb-5 a11">
+     
+                                <div class="col-sm-4" >
+                                    <img src="<?php echo $row[8];?>" class="img-fluid" alt="...">
+                                </div>
+                                <div class="col-sm-8">
+                                    <h5 class="card-title mb-2">
+                                        <a href="" class="text-decoration-none"><?php echo $row[1];?></a>
+                                    </h5>
+                                    <p class="card-text"><span class=" fw-bold">Bài hát: </span><?php echo $row[2];?></p>
+                                    <p class="card-text"><span class=" fw-bold">Thể loại: </span><?php echo $row[13];?></p>
+                                    <p class="card-text"><span class=" fw-bold">Tóm tắt: </span><?php echo $row[4];?></p>
+                                    <p class="card-text"><span class=" fw-bold">Nội dung: </span><?php echo $row[5];?></p>
+                                    <p class="card-text"><span class=" fw-bold">Tác giả: </span><?php echo $row[10];?></p>
+            
+                                </div>   
+                            </div>
+                            <?php
+                           
+                                
+                             
+                }
+             }
+        ?>                  
     </main>
     <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
         <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
