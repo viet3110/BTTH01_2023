@@ -47,13 +47,14 @@
                 </div>
                 <div class="card-body">
                     <form method = "POST" action = "">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">User_Name</label>
-                            <input name="user_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter UserName">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" name = "user_name">
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
+                            <input type="password" class="form-control" name = "pass">
                         </div>
                         <button type="submit" class="btn btn-primary" name="add">Đăng Ký</button>
                     </form>
